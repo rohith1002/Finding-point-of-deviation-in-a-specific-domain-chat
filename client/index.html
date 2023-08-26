@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Loads socket.io client from server -->
+  <!-- <script src="/socket.io/socket.io.js"></script> -->
+
+  <!-- Loads socket.io client from CDN -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+  
+  <script type="module" src="getCosineScore.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <title>SPAM Deviation System | NLP Final Project</title>
+</head>
+<body>
+  <div id="app">
+    <h1 class="center">SPAM Deviation Point Detection and Remedies</h1>
+    <div id="chat-container" class="scroll-for-chat">
+
+    </div>
+    <div class="center">
+      <form id="messageForm" action=":5000/getCosineScore" method="POST">
+        <input class="input" type="text" name="currMessage" id="messageInput" size=70><button class="btn" type="submit" id="sendBtn">Send!</button>
+      </form>
+    </div>
+  </div>
+  <h3 id="cosine"></h3>
+</body>
+
+<script>
+  var form=document.getElementById('messageForm')
+  
+  form.addEventListener('submit', function(e){
+   e.preventDefault()
+  
+   var message=document.getElementById('messageInput').value
+  //  var body=document.getElementById('body').value
+  
+   fetch(':5000/getCosineScore', {
+    method: 'POST',
+    body: JSON.stringify({
+      currUser: "Admin",
+      currMessage: message,
+  
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    }
+    })
+    .then(function(response){
+      return response.json()
+    })
+    .then(function(data){
+      console.log(data)
+      console.log("CosineSENT", parseFloat(data.CosineScore))
+      console.log("ThresholdSENT", parseFloat(data.Threshold))
+      // Each time score gets over-written
+      localStorage.setItem("noteLocalThreshold", data.Threshold);
+      localStorage.setItem("noteLocalCosine", data.CosineScore);
+      cosine = document.getElementById("cosine")
+      document.getElementById("cosine").style.backgroundColor = "yellow";
+      cosine.innerHTML = "Live Cosine Score: " + localStorage.getItem("noteLocalCosine")
+    })
+    .catch(error => console.error('Error:', error)); 
+    });
+</script>
+<!-- Script to emit/receive events from socket.io server -->
+<script defer src="script.js"></script>
+</html>
