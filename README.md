@@ -19,7 +19,7 @@ This project involves the development of an enhanced chat application that emplo
 # DEMO : https://www.youtube.com/watch?v=P8irDlJOY9A
 
 #CHAT INTEERFACE :
-[!interface](https://github.com/rohith1002/Finding-point-of-deviation-in-a-specific-domain-chat/blob/main/interface.jpg).
+![interface](https://github.com/rohith1002/Finding-point-of-deviation-in-a-specific-domain-chat/blob/main/interface.jpg).
 
 #SPAM POINT :
-[!SPAM](https://github.com/rohith1002/Finding-point-of-deviation-in-a-specific-domain-chat/blob/main/spam.PNG)
+![SPAM](https://github.com/rohith1002/Finding-point-of-deviation-in-a-specific-domain-chat/blob/main/spam.PNG)
